@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Generator</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
   </head>
   <body>
     <header>
@@ -11,21 +13,42 @@
     </header>
 
     <main>
-      <form>
-        <input
-          type="text"
-          placeholder="What do you want to know about Vienna?"
-          autofocus
-          required
-          autocomplete="off"
-        />
-        <input type="submit" />
-        <div>
-          There are approx
-          <br />
-          2 million people in Vienna
-        </div>
-      </form>
+      <div class="container">
+        <form id="vienna-generator-form">
+          <input
+            type="text"
+            placeholder="What do you want to know about Vienna?"
+            autofocus
+            required
+            autocomplete="off"
+            class="instructions"
+          />
+          <input type="submit" class="button" />
+        </form>
+        <div class="vienna" id="vienna"></div>
+      </div>
     </main>
+
+    <footer>
+      <div class="container">
+        This project was coded by Vicky Stutter and is
+        <a href="https://github.com/vickyviccc/AI-Generator">open-sourced</a>
+        and is hosted on <a href="">Netlify</a>
+      </div>
+    </footer>
   </body>
+  <script>
+    function generateFact(event) {
+      event.preventDefault();
+
+      new TypeIt("#vienna", {
+        strings: "Vienna",
+        speed: 50,
+        waitUntilVisible: true,
+        cursor: "",
+      }).go();
+    }
+    let factFormElement = document.querySelector("#vienna-generator-form");
+    factFormElement.addEventListener("submit", generateFact);
+  </script>
 </html>
