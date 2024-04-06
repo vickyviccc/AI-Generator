@@ -27,7 +27,8 @@
           />
           <input type="submit" class="button" />
         </form>
-        <div class="vienna" id="vienna"></div>
+
+        <div class="vienna hidden" id="vienna"></div>
       </div>
     </main>
 
@@ -57,8 +58,11 @@
       let context = "be specific and do not use more than 50 words";
       let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
 
+      let factElement = document.querySelector("#vienna");
+      factElement.classList.remove("hidden");
       axios.get(apiUrl).then(displayFact);
     }
+
     let factFormElement = document.querySelector("#vienna-generator-form");
     factFormElement.addEventListener("submit", generateFact);
   </script>
