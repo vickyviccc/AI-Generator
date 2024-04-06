@@ -6,6 +6,7 @@
     <title>AI Generator</title>
     <link rel="stylesheet" href="style.css" />
     <script src="https://unpkg.com/typeit@8.7.1/dist/index.umd.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <body>
     <header>
@@ -22,6 +23,7 @@
             required
             autocomplete="off"
             class="instructions"
+            id="user-instructions"
           />
           <input type="submit" class="button" />
         </form>
@@ -38,15 +40,24 @@
     </footer>
   </body>
   <script>
-    function generateFact(event) {
-      event.preventDefault();
-
+    function displayFact(response) {
       new TypeIt("#vienna", {
-        strings: "Vienna",
+        strings: response.data.answer,
         speed: 50,
         waitUntilVisible: true,
         cursor: "",
       }).go();
+    }
+    function generateFact(event) {
+      event.preventDefault();
+      let instructionsInput = document.querySelector("#user-instructions");
+      let apiKey = "ob013544229b2c6b3ft9f43ac4050481";
+
+      let prompt = `Generate a fact about ${instructionsInput.value}`;
+      let context = "be specific and do not use more than 50 words";
+      let apiUrl = `https://api.shecodes.io/ai/v1/generate?prompt=${prompt}&context=${context}&key=${apiKey}`;
+
+      axios.get(apiUrl).then(displayFact);
     }
     let factFormElement = document.querySelector("#vienna-generator-form");
     factFormElement.addEventListener("submit", generateFact);
